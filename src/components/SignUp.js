@@ -7,8 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() { 
     const [clicked, setClicked] = useState(false);
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState(false);
     const navigate = useNavigate();
 
@@ -16,9 +18,10 @@ export default function Login() {
         event.preventDefault();
         
         try {
-            const userSignIn = {email,password};
-            const promise = await axios.post("http://localhost:4600/signin",userSignIn);
+            const userSignIn = {name,email,password,confirmPassword};
+            const promise = await axios.post("http://localhost:4600/signup",userSignIn);
             console.log(promise.data);
+            navigate("/");
         } catch (err) {
             setError(true);
             setClicked(false);
@@ -30,7 +33,7 @@ export default function Login() {
         <Container>
             <Options>
                 <span onClick={sendInfo}>Entrar</span> 
-                <a onClick={() => navigate("/signup")}>Cadastre-se</a>
+                <a >Cadastre-se</a>
             </Options>
 
             <Body>
@@ -38,6 +41,13 @@ export default function Login() {
             </Body>
                 <form onSubmit={sendInfo}>
                     <Data error={error}>
+                    <input
+                        type="text"
+                        placeholder="Nome"
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                        required
+                    />
                     <input
                         type="email"
                         placeholder="E-mail"
@@ -50,6 +60,13 @@ export default function Login() {
                         placeholder="Senha"
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
+                        required
+                    />
+                     <input
+                        type="password"
+                        placeholder="Confirme a sua senha"
+                        value={confirmPassword}
+                        onChange={(event) => setConfirmPassword(event.target.value)}
                         required
                     />
                     <button onClick={() => setClicked(true)}>
@@ -90,7 +107,7 @@ const Options = styled.div`
     font-size: 14px; 
 
     span { 
-        color: rgba(93, 144, 64, 1);
+        color: rgba(156, 156, 156, 1); 
         margin-right: 22px;
 
         &:hover{ 
@@ -99,7 +116,7 @@ const Options = styled.div`
     }
 
     a { 
-        color: rgba(156, 156, 156, 1); 
+        color: rgba(93, 144, 64, 1);
 
         &:hover{ 
             cursor: pointer;

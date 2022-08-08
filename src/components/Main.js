@@ -7,8 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() { 
     const [clicked, setClicked] = useState(false);
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState(false);
     const navigate = useNavigate();
 
@@ -16,9 +18,10 @@ export default function Login() {
         event.preventDefault();
         
         try {
-            const userSignIn = {email,password};
-            const promise = await axios.post("http://localhost:4600/signin",userSignIn);
+            const userSignIn = {name,email,password,confirmPassword};
+            const promise = await axios.post("http://localhost:4600/signup",userSignIn);
             console.log(promise.data);
+            navigate("/");
         } catch (err) {
             setError(true);
             setClicked(false);
@@ -28,10 +31,14 @@ export default function Login() {
 
     return(
         <Container>
+            <Title>
+                <a>Seja Bem-Vindo, Fulano</a>
             <Options>
-                <span onClick={sendInfo}>Entrar</span> 
-                <a onClick={() => navigate("/signup")}>Cadastre-se</a>
+                <span>Home</span> 
+                <span>Ranking</span>
+                <span>Sair</span>
             </Options>
+            </Title>
 
             <Body>
                 <img src={logo} alt="logo"/> 
@@ -39,17 +46,10 @@ export default function Login() {
                 <form onSubmit={sendInfo}>
                     <Data error={error}>
                     <input
-                        type="email"
-                        placeholder="E-mail"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                        required
-                    />
-                    <input
-                        type="password"
-                        placeholder="Senha"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
+                        type="url"
+                        placeholder="Links que cabem no bolso"
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
                         required
                     />
                     <button onClick={() => setClicked(true)}>
@@ -62,10 +62,18 @@ export default function Login() {
                     </Data>
                 </form>
             
+            <Main>
+                <Item>
+                    <p>https://</p>
+                    <a>abhxj</a>
+                    <span>Quantidade de visitantes: 271</span>
+                </Item>
+            </Main>
+
             <Center>
             {error ? (
                 <ErrorMessage>
-                    <h3>Informações Incorretas</h3>
+                    <h3>Url inválida ou já existente</h3>
                     <h4 onClick={() => setError(false)}>X</h4>
                 </ErrorMessage>
                 ) : (
@@ -80,7 +88,18 @@ export default function Login() {
 const Container = styled.div`
     width: 100%; 
     height: 100%; 
-    margin-top: 40px; 
+    margin-top: 40px;  
+`
+const Title = styled.div`
+    width: 88%; 
+    height: 100%; 
+    display: flex; 
+    justify-content: space-between;
+    padding-left: 250px;
+
+    a { 
+        color: rgba(93, 144, 64, 1);
+    }
 `
 const Options = styled.div`
     width: 88%; 
@@ -90,16 +109,8 @@ const Options = styled.div`
     font-size: 14px; 
 
     span { 
-        color: rgba(93, 144, 64, 1);
-        margin-right: 22px;
-
-        &:hover{ 
-            cursor: pointer;
-        }
-    }
-
-    a { 
         color: rgba(156, 156, 156, 1); 
+        margin-right: 22px;
 
         &:hover{ 
             cursor: pointer;
@@ -118,8 +129,8 @@ const Data = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
-  flex-direction: column;
+  justify-content: center;
+  flex-direction: row;
   margin-bottom: ${(props) => (props.error ? "70px" : "32px")};
 
   input {
@@ -143,7 +154,7 @@ const Data = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 45px;
+    margin-left: 69px;
     background-color: rgba(93, 144, 64, 1);
     color: rgba(255, 255, 255, 1);
     font-size: 20px;
@@ -156,6 +167,24 @@ const Data = styled.div`
       cursor: pointer;
     }
   }
+`
+const Main = styled.ul`
+  width: 100%; 
+  height: 100%; 
+  margin-top: 60px;
+  display: flex; 
+  align-items: center;
+  flex-direction: column; 
+`
+const Item = styled.li`
+  width: 61%; 
+  height: 60px;
+  background-color: rgba(128, 204, 116, 1);
+  color: rgba(255, 255, 255, 1); 
+  display: flex; 
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 12px;
 `
 const Center = styled.div`
   width: 100%; 
