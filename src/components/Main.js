@@ -62,6 +62,14 @@ export default function Login() {
                     </Data>
                 </form>
             
+            <Main>
+                <Item>
+                    <p>https://</p>
+                    <a>abhxj</a>
+                    <span>Quantidade de visitantes: 271</span>
+                </Item>
+            </Main>
+
             <Center>
             {error ? (
                 <ErrorMessage>
@@ -159,6 +167,24 @@ const Data = styled.div`
       cursor: pointer;
     }
   }
+`
+const Main = styled.ul`
+  width: 100%; 
+  height: 100%; 
+  margin-top: 60px;
+  display: flex; 
+  align-items: center;
+  flex-direction: column; 
+`
+const Item = styled.li`
+  width: 61%; 
+  height: 60px;
+  background-color: rgba(128, 204, 116, 1);
+  color: rgba(255, 255, 255, 1); 
+  display: flex; 
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 12px;
 `
 const Center = styled.div`
   width: 100%; 
