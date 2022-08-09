@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import UserInfosContext from "../contexts/UserInfosContext";
 import RenderUserUrls from "../pages/RenderUserUrls";
+import Ranking from "./Ranking";
 
 export default function Login() { 
     const [clicked, setClicked] = useState(false);
@@ -100,6 +101,7 @@ export default function Login() {
                         shortUrl={info.shortUrl}
                         visitCount={info.visitCount}
                         setUserUrlsInfo = {setUserUrlsInfo}
+                        id= {info.id}
                         />
                 ))}
                 </ul>
