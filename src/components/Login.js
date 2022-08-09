@@ -1,24 +1,30 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import logo from "../assets/images/Logo.png";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import UserInfosContext from "../contexts/UserInfosContext";
 
 export default function Login() { 
     const [clicked, setClicked] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(false);
+    const { setToken } = useContext(UserInfosContext);
     const navigate = useNavigate();
 
     async function sendInfo(event) { 
         event.preventDefault();
+        setClicked(true);
         
         try {
             const userSignIn = {email,password};
-            const promise = await axios.post("http://localhost:4600/signin",userSignIn);
+            const promise = await axios.post("https://projeto16-shortly-lucas.herokuapp.com/signin",userSignIn);
+            setToken(promise.data.token);
+            localStorage.setItem("token", promise.data.token);
             console.log(promise.data);
+            navigate("/main");
         } catch (err) {
             setError(true);
             setClicked(false);
@@ -52,7 +58,7 @@ export default function Login() {
                         onChange={(event) => setPassword(event.target.value)}
                         required
                     />
-                    <button onClick={() => setClicked(true)}>
+                    <button>
                         {clicked ? (
                         <ThreeDots color="white" height={80} width={80} />
                         ) : (
