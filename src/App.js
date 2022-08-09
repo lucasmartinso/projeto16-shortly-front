@@ -7,6 +7,7 @@ import SignUp from "./components/SignUp";
 import Main from "./components/Main";
 import Ranking from "./components/Ranking";
 import UserInfosContext from "./contexts/UserInfosContext";
+import RankingLogged from "./components/RankingLogged";
 
 export default function App() {
   const [token,setToken] = useState(localStorage.getItem("token"));
@@ -24,7 +25,8 @@ export default function App() {
         <Route path="/" element={<Ranking />} /> 
           <Route path="/signin" element={<Login />} /> 
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/main" element={<Main />} />
+          <Route path="/main" element={<Main />} /> 
+          <Route path="/ranking" element={<RankingLogged/>} />
         </Routes>
       </BrowserRouter> 
       </UserInfosContext.Provider>
