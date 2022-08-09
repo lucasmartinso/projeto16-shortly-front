@@ -36,9 +36,21 @@ export default function Login() {
     async function sendInfo(event) { 
         event.preventDefault();
         setClicked(true);
+
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+        };
+        const urlInfo= {url};
         
         try {
-            
+            const promise = await axios.post("https://projeto16-shortly-lucas.herokuapp.com/urls/shorten",urlInfo,config);
+            console.log(promise.data);
+            const promises = axios.get("https://projeto16-shortly-lucas.herokuapp.com/users/me",config);
+            promises.then(response => {
+                console.log(response.data[0].shortenedUrls);
+                setUserUrlsInfo(response.data[0].shortenedUrls);
+            }); 
+            setClicked(false);
         } catch (err) {
             setError(true);
             setClicked(false);
