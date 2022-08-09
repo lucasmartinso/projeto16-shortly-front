@@ -6,9 +6,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import UserInfosContext from "../contexts/UserInfosContext";
 import RenderUserUrls from "../pages/RenderUserUrls";
-import Ranking from "./Ranking";
 
-export default function Login() { 
+export default function Main() { 
     const [clicked, setClicked] = useState(false);
     const [name, setName] = useState("");
     const [url,setUrl] = useState("");
@@ -65,7 +64,7 @@ export default function Login() {
                 <a>Seja Bem-Vindo, {name}!</a>
             <Options>
                 <span onClick={() => navigate("/")}>Home</span> 
-                <span>Ranking</span>
+                <span onClick={() => navigate("/ranking")}>Ranking</span>
                 <span  onClick={() => navigate("/signin")}>Sair</span>
             </Options>
             </Title>
@@ -92,7 +91,7 @@ export default function Login() {
                     </Data>
                 </form>
             
-            <Main>
+            <Principal>
                 <ul>
                 {userUrlsInfo.map((info,index) => (
                     <RenderUserUrls 
@@ -105,7 +104,7 @@ export default function Login() {
                         />
                 ))}
                 </ul>
-            </Main>
+            </Principal>
 
             <Center>
             {error ? (
@@ -205,7 +204,7 @@ const Data = styled.div`
     }
   }
 `
-const Main = styled.div`
+const Principal = styled.div`
   width: 100%; 
   height: 100%; 
   margin-top: 60px;
