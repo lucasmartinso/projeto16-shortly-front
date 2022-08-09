@@ -11,12 +11,17 @@ export default function RenderUserUrls({index,url,shortUrl,visitCount}) {
 }
 
 const Item = styled.li`
-  width: 61%; 
+  width: 100%; 
   height: 60px;
+  margin-bottom: 42px;
   background-color: rgba(128, 204, 116, 1);
   color: rgba(255, 255, 255, 1); 
   display: flex; 
   align-items: center;
   justify-content: space-around;
   border-radius: 12px;
+
+  &:hover { 
+    cursor: pointer;
+  }
 `

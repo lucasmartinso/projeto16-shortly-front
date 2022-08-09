@@ -197,6 +197,13 @@ const Main = styled.div`
   display: flex; 
   align-items: center;
   flex-direction: column; 
+
+  ul { 
+    width: 62%; 
+    height: 100%;
+    display; flex; 
+    flex-direction: column; 
+  }
 `
 const Center = styled.div`
   width: 100%; 
