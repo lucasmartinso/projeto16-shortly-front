@@ -65,7 +65,7 @@ export default function Login() {
             <Options>
                 <span onClick={() => navigate("/")}>Home</span> 
                 <span>Ranking</span>
-                <span>Sair</span>
+                <span  onClick={() => navigate("/signin")}>Sair</span>
             </Options>
             </Title>
 
@@ -99,6 +99,7 @@ export default function Login() {
                         url={info.url}
                         shortUrl={info.shortUrl}
                         visitCount={info.visitCount}
+                        setUserUrlsInfo = {setUserUrlsInfo}
                         />
                 ))}
                 </ul>
