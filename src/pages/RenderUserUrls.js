@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export default function RenderUserUrls({url,shortUrl,visitCount}) { 
+export default function RenderUserUrls({index,url,shortUrl,visitCount}) { 
     return( 
-        <Item>
+        <Item value={index}>
             <p>{url}</p>
             <a>{shortUrl}</a>
             <span>Quantidade de visitantes: {visitCount}</span>

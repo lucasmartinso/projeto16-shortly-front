@@ -1,16 +1,17 @@
 import styled from "styled-components"; 
 
-export default function RenderRanking() { 
+export default function RenderRanking({index,name,linksCount,visitCount}) { 
     return(
         <User>
-             <a>1. Fulaninha - 32 links - 1.703.584 visualizações</a>
+             <a>{index}. {name}  -  {linksCount} links -  {visitCount} visualizações</a>
         </User>
     )
 } 
 
 const User = styled.li`
     width: 100%; 
-    height: 100%; 
+    height: 100%;
+    margin-bottom: 25px; 
 
     a { 
         font-weight: bold;

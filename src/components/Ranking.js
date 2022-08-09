@@ -7,6 +7,16 @@ import UserInfosContext from "../contexts/UserInfosContext";
 import RenderRanking from "../pages/RenderRanking";
 
 export default function Ranking() { 
+    const [usersRanking,setUsersRanking] = useState([]); 
+
+    useEffect(() => { 
+        const promise = axios.get("https://projeto16-shortly-lucas.herokuapp.com/ranking");
+
+        promise.then(response => { 
+            console.log(response.data);
+            setUsersRanking(response.data);
+        });
+    },[])
     const navigate = useNavigate();
 
     return( 
@@ -28,7 +38,14 @@ export default function Ranking() {
             <Container2>
             <UsersRanking>
                 <ul>
-                    <RenderRanking />
+                    {usersRanking.map((rank,index) => ( 
+                        <RenderRanking 
+                            index= {index+1}
+                            name= {rank.name}
+                            linksCount={rank.linksCount}
+                            visitCount={rank.visitCount}
+                        /> 
+                    ))}
                 </ul>
             </UsersRanking>
             </Container2>
@@ -108,10 +125,16 @@ const UsersRanking = styled.div`
     height: 241px; 
     display: flex; 
     flex-direction: column;
-    padding: 19px 5px 30px 40px; 
+    padding: 19px 5px 0px 40px; 
     border-radius: 8px; 
     border: 1px solid rgba(120, 177, 89, 0.25);
-    box-shadow: 0px 4px 24px 0px rgba(120, 177, 89, 0.12);
+    box-shadow: 0px 4px 24px 0px rgba(120, 177, 89, 0.12); 
+
+    ul { 
+        display: flex; 
+        flex-direction: column;
+        align-items: center;
+    }
 `
 const Mensage = styled.div`
     margin-top: 80px;

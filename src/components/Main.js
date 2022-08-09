@@ -81,13 +81,14 @@ export default function Login() {
             
             <Main>
                 <ul>
-                {userUrlsInfo.map((info,index) => {
+                {userUrlsInfo.map((info,index) => (
                     <RenderUserUrls 
+                        index= {index+1}
                         url={info.url}
                         shortUrl={info.shortUrl}
                         visitCount={info.visitCount}
                         />
-                })}
+                ))}
                 </ul>
             </Main>
 
