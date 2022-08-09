@@ -1,27 +1,44 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "../assets/images/Logo.png";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import UserInfosContext from "../contexts/UserInfosContext";
+import RenderUserUrls from "../pages/RenderUserUrls";
 
 export default function Login() { 
     const [clicked, setClicked] = useState(false);
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [url,setUrl] = useState("");
+    const [userUrlsInfo, setUserUrlsInfo] = useState([]);
     const [error, setError] = useState(false);
+    const { token } = useContext(UserInfosContext);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const config = {
+        headers: { Authorization: `Bearer ${token}` },
+        };
+        const promise = axios.get("https://projeto16-shortly-lucas.herokuapp.com/users/me",config);
+
+        promise.then(response => {
+            console.log(response.data[0].shortenedUrls);
+            setName(response.data[0].name); 
+            setUserUrlsInfo(response.data[0].shortenedUrls);
+        }); 
+
+        promise.catch(error => { 
+            console.log(error);
+        })
+    },[]);
 
     async function sendInfo(event) { 
         event.preventDefault();
+        setClicked(true);
         
         try {
-            const userSignIn = {name,email,password,confirmPassword};
-            const promise = await axios.post("http://localhost:4600/signup",userSignIn);
-            console.log(promise.data);
-            navigate("/");
+            
         } catch (err) {
             setError(true);
             setClicked(false);
@@ -32,9 +49,9 @@ export default function Login() {
     return(
         <Container>
             <Title>
-                <a>Seja Bem-Vindo, Fulano</a>
+                <a>Seja Bem-Vindo, {name}!</a>
             <Options>
-                <span>Home</span> 
+                <span onClick={() => navigate("/")}>Home</span> 
                 <span>Ranking</span>
                 <span>Sair</span>
             </Options>
@@ -48,26 +65,30 @@ export default function Login() {
                     <input
                         type="url"
                         placeholder="Links que cabem no bolso"
-                        value={name}
-                        onChange={(event) => setName(event.target.value)}
+                        value={url}
+                        onChange={(event) => setUrl(event.target.value)}
                         required
                     />
-                    <button onClick={() => setClicked(true)}>
+                    <button>
                         {clicked ? (
                         <ThreeDots color="white" height={80} width={80} />
                         ) : (
-                        "Entrar"
+                        "Encurtar link"
                         )}
                     </button>
                     </Data>
                 </form>
             
             <Main>
-                <Item>
-                    <p>https://</p>
-                    <a>abhxj</a>
-                    <span>Quantidade de visitantes: 271</span>
-                </Item>
+                <ul>
+                {userUrlsInfo.map((info,index) => {
+                    <RenderUserUrls 
+                        url={info.url}
+                        shortUrl={info.shortUrl}
+                        visitCount={info.visitCount}
+                        />
+                })}
+                </ul>
             </Main>
 
             <Center>
@@ -168,23 +189,13 @@ const Data = styled.div`
     }
   }
 `
-const Main = styled.ul`
+const Main = styled.div`
   width: 100%; 
   height: 100%; 
   margin-top: 60px;
   display: flex; 
   align-items: center;
   flex-direction: column; 
-`
-const Item = styled.li`
-  width: 61%; 
-  height: 60px;
-  background-color: rgba(128, 204, 116, 1);
-  color: rgba(255, 255, 255, 1); 
-  display: flex; 
-  align-items: center;
-  justify-content: space-around;
-  border-radius: 12px;
 `
 const Center = styled.div`
   width: 100%; 

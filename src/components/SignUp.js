@@ -16,10 +16,11 @@ export default function Login() {
 
     async function sendInfo(event) { 
         event.preventDefault();
+        setClicked(true);
         
         try {
             const userSignIn = {name,email,password,confirmPassword};
-            const promise = await axios.post("http://localhost:4600/signup",userSignIn);
+            const promise = await axios.post("https://projeto16-shortly-lucas.herokuapp.com/signup",userSignIn);
             console.log(promise.data);
             navigate("/");
         } catch (err) {
@@ -32,8 +33,8 @@ export default function Login() {
     return(
         <Container>
             <Options>
-                <span onClick={sendInfo}>Entrar</span> 
-                <a >Cadastre-se</a>
+                <span onClick={()=> navigate("/signin")}>Entrar</span> 
+                <a onClick={sendInfo}>Cadastre-se</a>
             </Options>
 
             <Body>
@@ -69,11 +70,11 @@ export default function Login() {
                         onChange={(event) => setConfirmPassword(event.target.value)}
                         required
                     />
-                    <button onClick={() => setClicked(true)}>
+                    <button>
                         {clicked ? (
                         <ThreeDots color="white" height={80} width={80} />
                         ) : (
-                        "Entrar"
+                        "Criar Conta"
                         )}
                     </button>
                     </Data>
